@@ -38,8 +38,9 @@ module Github
         option :path, default: nil, desc: "file path", aliases: ['--file'], validations: [Proc.new { |path| valid_path? path } ]
         option :blame, type: :boolean, default: false, desc: "go to git blame page", aliases: ['-b']
 
-        def call(branch: nil, path: nil, blame: nil, **)
+        def call(branch: nil, path: nil, blame: nil, **args)
           display.error "Not a git repository!" unless git
+          display.error "Cannot git blame without a file!\n(Use -f option to pass a file)" if blame && path.nil?
           display.error "Cannot git blame a directory!" if blame && File.directory?(path)
           @branch = branch
           @raw_path = path
