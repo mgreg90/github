@@ -9,8 +9,6 @@ module Github
         argument :commit_hash, required: true, validations: [Proc.new { |sha| valid_commit? sha }]
 
         desc "Opens browser to show the commit."
-
-        example ["# Opens browser to new repo screen."]
         
         def self.git
           @git || begin
